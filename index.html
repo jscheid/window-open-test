@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="bootstrap-3.2.0-dist/css/bootstrap.min.css">
+<body>
+
+<div class="container" id="page1">
+  <form class="form-horizontal" role="form">
+    <fieldset>
+      <legend>This stuff is not sensitive</legend>
+      <div class="form-group">
+        <label class="col-sm-3 control-label" for="foo">First Name</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" name="foo" id="foo" placeholder="Your First Name">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label" for="bar">Last Name</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" name="bar" id="bar" placeholder="Last Name">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+          <button id="next-page" type="button" class="btn btn-success btn-lg">
+            Next Page
+            <span class="glyphicon glyphicon-chevron-right"/>
+          </button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>
+
+
+<div class="container" id="page3" style="display: none">
+  <form class="form-horizontal" role="form">
+    <fieldset>
+      <legend>More unimportant stuff</legend>
+      <div class="form-group">
+        <label class="col-sm-3 control-label" for="foo">Dog's Name</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" name="foo" id="foo" placeholder="Your Dog's Name">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label" for="bar">Cat's Name</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" name="bar" id="bar" placeholder="Your Cat's Name">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+          <button id="next-page" type="button" class="btn btn-success btn-lg disabled" disabled>
+            Next Page
+            <span class="glyphicon glyphicon-chevron-right"/>
+          </button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>
+
+<script src="jquery-2.1.1.min.js"></script>
+<script>
+
+var secure_window = null;
+
+$('#next-page').click(function (event) {
+
+  secure_window = window.open('secure.html', target='secure');
+  $('#page1').hide();
+});
+
+
+window.addEventListener("message", receiveMessage, false);
+
+function receiveMessage(event)
+{
+  console.log('received message: ', event)
+  $('#page3').show();
+  if (secure_window) {
+    secure_window.close();
+    secure_window = null;
+  }
+} 
+  
+
+</script>
